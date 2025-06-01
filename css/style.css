@@ -1,0 +1,89 @@
+/* Estilos Globais e Tipografia */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #111827; /* Cor de fundo escura (Tailwind: bg-gray-900) */
+    color: #F3F4F6; /* Cor do texto clara (Tailwind: text-gray-100) */
+    /* O padding é aplicado diretamente no body no HTML com classes Tailwind (p-4 md:p-8) */
+}
+
+/* Estilos para o Container da Tabela com Scroll */
+.table-container {
+    max-height: 70vh; /* Altura máxima para a tabela, permitindo scroll */
+    overflow-y: auto; /* Adiciona barra de scroll vertical quando o conteúdo excede a altura máxima */
+    border-radius: 0.5rem; /* Tailwind: rounded-lg */
+    border: 1px solid #374151; /* Tailwind: border border-gray-700 */
+}
+
+/* Estilização da Barra de Scroll (para navegadores baseados em WebKit como Chrome, Safari, Edge) */
+.table-container::-webkit-scrollbar {
+    width: 8px; /* Largura da barra de scroll */
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #1F2937; /* Cor do trilho da barra de scroll (Tailwind: bg-gray-800) */
+    border-radius: 10px; /* Bordas arredondadas para o trilho */
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #4B5563; /* Cor do "polegar" da barra de scroll (Tailwind: bg-gray-600) */
+    border-radius: 10px; /* Bordas arredondadas para o "polegar" */
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #6B7280; /* Cor do "polegar" ao passar o mouse (Tailwind: bg-gray-500) */
+}
+
+/* Efeito de Hover nas Linhas da Tabela */
+/* As classes Tailwind são usadas diretamente no HTML para a estrutura da tabela (min-w-full divide-y divide-gray-700) */
+/* Este estilo é para o hover nas linhas do tbody */
+#investment-data-body tr:hover { /* Aplicando diretamente ao tbody com ID */
+    background-color: #1F2937; /* Cor de fundo ao passar o mouse (Tailwind: bg-gray-800) */
+}
+
+/* Cabeçalho da Tabela Fixo */
+/* O cabeçalho (thead) já tem a classe bg-gray-700 do Tailwind. */
+/* Este CSS garante que ele permaneça fixo no topo durante o scroll vertical dentro do .table-container. */
+thead th {
+    position: sticky; /* Mantém o cabeçalho fixo */
+    top: 0; /* Alinha o cabeçalho no topo do container de scroll */
+    z-index: 10; /* Garante que o cabeçalho fique sobre o conteúdo da tabela durante o scroll */
+    background-color: #374151; /* Cor de fundo do cabeçalho (Tailwind: bg-gray-700) - importante para cobrir o conteúdo abaixo */
+    /* As classes de texto, padding, etc., são aplicadas via Tailwind no HTML */
+}
+
+/* Cores para Indicadores de Rank e Score */
+.rank-good {
+    color: #10B981; /* Verde para bons ranks/scores (Tailwind: text-green-500) */
+}
+
+.rank-medium {
+    color: #F59E0B; /* Amarelo para ranks/scores médios (Tailwind: text-yellow-500) */
+}
+
+.rank-bad {
+    color: #EF4444; /* Vermelho para ranks/scores ruins (Tailwind: text-red-500) */
+}
+
+/* Estilos para os Cards de Destaque */
+.card {
+    background-color: #1F2937; /* Cor de fundo do card (Tailwind: bg-gray-800) */
+    border-radius: 0.75rem; /* Bordas arredondadas (Tailwind: rounded-xl) */
+    padding: 1.5rem; /* Espaçamento interno (Tailwind: p-6) */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Sombra (Tailwind: shadow-lg) */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transição suave para hover */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Efeito de elevação ao passar o mouse */
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Sombra mais pronunciada (Tailwind: shadow-2xl) */
+}
+
+/* Estilo para o Valor Principal nos Cards (ex: número de ações, valor do ROIC) */
+.stat-value {
+    font-size: 1.875rem; /* Tamanho da fonte (Tailwind: text-3xl) */
+    font-weight: 700; /* Peso da fonte (Tailwind: font-bold) */
+    /* A cor específica é definida via classes Tailwind no HTML (ex: text-blue-400) */
+}
+
+/* Outros elementos como header, footer, selects, labels são estilizados primariamente com Tailwind CSS no HTML. */
+/* Este ficheiro CSS complementa ou sobrescreve estilos do Tailwind quando necessário, ou define estilos não cobertos. */
