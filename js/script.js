@@ -1,38 +1,81 @@
-// URL da sua API (este é um exemplo, precisaria do URL real)
-const apiUrl = 'https://api-invest-307231904601.southamerica-east1.run.app/magic_formula_model_b';
+const apiUrls = {
+    'A': 'https://api-invest-307231904601.southamerica-east1.run.app/magic_formula_model_a',
+    'B': 'https://api-invest-307231904601.southamerica-east1.run.app/magic_formula_model_b'
+};
+
+// Estado atual
+let currentModel = 'B'; // Começa com o modelo B por padrão
 
 // Elementos do DOM
 const tableBody = document.getElementById('investment-data-body');
 const sortSelect = document.getElementById('sort-select');
-let investmentData = []; // Inicializa como um array vazio
+const btnModelA = document.getElementById('btn-model-a');
+const btnModelB = document.getElementById('btn-model-b');
+
+let investmentData = []; 
+
+// Função para trocar de modelo ao clicar no botão
+function switchModel(model) {
+    if (currentModel === model) return; // Se já estiver no modelo, não faz nada
+
+    currentModel = model;
+
+    // Atualiza visual dos botões
+    if (model === 'A') {
+        btnModelA.className = "px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 bg-purple-600 text-white shadow-md";
+        btnModelB.className = "px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 text-gray-300 hover:text-white hover:bg-gray-600";
+    } else {
+        btnModelB.className = "px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 bg-blue-600 text-white shadow-md";
+        btnModelA.className = "px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 text-gray-300 hover:text-white hover:bg-gray-600";
+    }
+
+    // Recarrega os dados
+    fetchDataAndInitialize();
+}
 
 // Função para buscar e processar os dados da API
 async function fetchDataAndInitialize() {
+    // Mostra loading na tabela enquanto carrega
+    if (tableBody) {
+        tableBody.innerHTML = `<tr><td colspan="10" class="text-center py-8 text-gray-400">Carregando dados do Modelo ${currentModel}...</td></tr>`;
+    }
+
     try {
-        const response = await fetch(apiUrl); // Faz o pedido à API
+        const url = apiUrls[currentModel];
+        const response = await fetch(url);
+        
         if (!response.ok) {
             throw new Error(`Erro HTTP! Status: ${response.status}`);
         }
-        const apiJsonData = await response.json(); // Converte a resposta para JSON
-        console.log(apiJsonData);
-        // Assumindo que a API retorna um objeto com uma propriedade "message"
-        // como no seu jsonData original
+        
+        const apiJsonData = await response.json();
+        
+        let rawData = [];
         if (apiJsonData && apiJsonData.message) {
-            investmentData = apiJsonData.message;
+            rawData = apiJsonData.message;
         } else {
-            // Se a estrutura for diferente, ajuste aqui
-            investmentData = apiJsonData;
+            rawData = apiJsonData;
         }
 
-        // Depois de obter os dados, inicializa a tabela e as estatísticas
-        sortData('magic_formula');
+        // --- NORMALIZAÇÃO DE DADOS ---
+        // A API 'A' usa "ticker" em vez de "papel" e não tem "setor".
+        // Vamos padronizar para que o resto do código funcione sem mexer na renderTable.
+        investmentData = rawData.map(item => ({
+            ...item,
+            // Se existir 'papel', usa ele. Se não, usa 'ticker'.
+            papel: item.papel || item.ticker, 
+            // Se existir 'setor', usa ele. Se não, coloca um traço.
+            setor: item.setor || '-' 
+        }));
+
+        // Inicializa a tabela e stats
+        sortData('magic_formula'); // Ordenação padrão
         updateStats();
 
     } catch (error) {
         console.error("Erro ao buscar dados da API:", error);
-        // Poderia mostrar uma mensagem de erro para o utilizador na página aqui
         if (tableBody) {
-            tableBody.innerHTML = `<tr><td colspan="10" class="text-center py-4 text-red-500">Falha ao carregar os dados. Tente novamente mais tarde.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="10" class="text-center py-4 text-red-500">Falha ao carregar os dados do Modelo ${currentModel}. Tente novamente.</td></tr>`;
         }
     }
 }
