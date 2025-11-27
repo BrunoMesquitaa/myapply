@@ -1,5 +1,5 @@
 // URL da sua API (este é um exemplo, precisaria do URL real)
-const apiUrl = 'https://api-invest-307231904601.southamerica-east1.run.app/magic_formula';
+const apiUrl = 'https://api-invest-307231904601.southamerica-east1.run.app/magic_formula_model_b';
 
 // Elementos do DOM
 const tableBody = document.getElementById('investment-data-body');
