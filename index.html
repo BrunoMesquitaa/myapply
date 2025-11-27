@@ -41,22 +41,32 @@
         </div>
     </div>
     <div class="bg-gray-800 shadow-2xl rounded-xl p-4 md:p-6">
-        <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-            <h2 class="text-2xl font-semibold text-gray-100">Ranking de Ações por Indicadores</h2>
-            <div class="flex items-center space-x-2">
-                <label for="sort-select" class="text-sm text-gray-300">Ordenar por:</label>
-                <select id="sort-select" class="bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2 px-3 text-sm focus:ring-blue-500 focus:border-blue-500">
-                    <option value="magic_formula">Magic Formula</option>
-                    <option value="roic">ROIC (Maior)</option>
-                    <option value="ev_ebit">EV/EBIT (Menor)</option>
-                    <option value="preco">Preço (Maior)</option>
-                    <option value="score">Score (Menor)</option>
-                    <option value="papel">Papel (A-Z)</option>
-                </select>
-            </div>
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+        <h2 class="text-2xl font-semibold text-gray-100">Ranking de Ações</h2>
+        
+        <div class="flex bg-gray-700 rounded-lg p-1">
+            <button onclick="switchModel('B')" id="btn-model-b" class="px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 bg-blue-600 text-white shadow-md">
+                Modelo B (Atual)
+            </button>
+            <button onclick="switchModel('A')" id="btn-model-a" class="px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 text-gray-300 hover:text-white hover:bg-gray-600">
+                Modelo A (Novo)
+            </button>
         </div>
 
-        <div class="table-container rounded-lg border border-gray-700">
+        <div class="flex items-center space-x-2">
+            <label for="sort-select" class="text-sm text-gray-300">Ordenar por:</label>
+            <select id="sort-select" class="bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2 px-3 text-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="magic_formula">Magic Formula</option>
+                <option value="roic">ROIC (Maior)</option>
+                <option value="ev_ebit">EV/EBIT (Menor)</option>
+                <option value="preco">Preço (Maior)</option>
+                <option value="score">Score (Menor)</option>
+                <option value="papel">Papel (A-Z)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-container rounded-lg border border-gray-700">
             <table class="min-w-full divide-y divide-gray-700">
                 <thead class="bg-gray-700">
                     <tr>
